@@ -1,0 +1,586 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>KaarTech Expertise Portal</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout concept: a sequenced portal (three acts, numbered because the order is a real reading path) with a layered portfolio explorer as the interactive centrepiece. */
+:root{
+  --bg:#f6f5f4; --surface:#ffffff; --surface2:#efeceb; --ink:#1c1a19; --muted:#625d5a; --line:#dcd7d4;
+  --red:#9d0102; --red-ink:#9d0102; --orange:#d84300; --on-red:#ffffff; --good:#1f7a4d;
+  --shadow:0 1px 2px rgba(28,26,25,.06),0 8px 24px rgba(28,26,25,.06);
+  --f-display:'Sora','Segoe UI',system-ui,sans-serif; --f-body:'Public Sans','Segoe UI',system-ui,sans-serif; --f-mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#121010; --surface:#1b1817; --surface2:#242020; --ink:#f2eeec; --muted:#a9a19d; --line:#352f2d;
+  --red:#c8201f; --red-ink:#ff6a5e; --orange:#ff7a3d; --on-red:#fff; --good:#58c28b;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121010; --surface:#1b1817; --surface2:#242020; --ink:#f2eeec; --muted:#a9a19d; --line:#352f2d;
+  --red:#c8201f; --red-ink:#ff6a5e; --orange:#ff7a3d; --on-red:#fff; --good:#58c28b;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35); color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0}
+h1,h2,h3,h4{font-family:var(--f-display);margin:0;line-height:1.15;text-wrap:balance}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+a{color:var(--red-ink)}
+:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+.wrap{max-width:1120px;margin:0 auto}
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+.top .wrap{display:flex;align-items:center;gap:12px;padding:10px 0}
+.brand{display:flex;align-items:center;gap:10px;background:none;border:0;padding:0;text-align:left}
+.mark{width:30px;height:30px;border-radius:7px;background:var(--red);color:#fff;display:grid;place-items:center;font:700 14px var(--f-display)}
+.brand b{font:700 15px var(--f-display);letter-spacing:-.01em}
+.brand span{display:block;font:400 11px var(--f-mono);color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+.sp{flex:1}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;font-size:13px;font-weight:500}
+.btn:hover{border-color:var(--muted)}
+.btn.pri{background:var(--red);border-color:var(--red);color:var(--on-red)}
+.btn.pri:hover{filter:brightness(1.1)}
+.bar{height:3px;background:var(--line)}
+.bar i{display:block;height:100%;width:0;background:var(--orange);transition:width .35s}
+/* page */
+main{padding-block:32px 24px;min-height:70vh}
+.eyebrow{font:500 11px var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--red-ink);margin-bottom:10px}
+h1.big{font-size:clamp(34px,6vw,64px);letter-spacing:-.03em;font-weight:700;max-width:16ch}
+h2.pt{font-size:clamp(26px,3.6vw,40px);letter-spacing:-.02em;font-weight:700;max-width:24ch}
+.lede{font-size:clamp(16px,1.6vw,19px);color:var(--muted);max-width:62ch;margin-top:14px}
+.sec{margin-top:36px}
+.sec>h3{font-size:15px;letter-spacing:.01em;margin-bottom:12px;font-weight:600}
+.sec>h3 small{font:400 11px var(--f-mono);color:var(--muted);margin-left:8px;text-transform:uppercase;letter-spacing:.08em}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;min-width:0}
+.card.flat{box-shadow:none}
+.card h4{font-size:15px;margin-bottom:8px}
+.card p,.card li{color:var(--muted);font-size:14px}
+.card ul{margin:8px 0 0;padding-left:18px}
+.card li{margin:3px 0}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;min-width:0}
+.stat b{display:block;font:700 clamp(26px,3.2vw,36px) var(--f-display);letter-spacing:-.02em;color:var(--red-ink);font-variant-numeric:tabular-nums}
+.stat span{font-size:13px;color:var(--muted)}
+.stat.dk{background:var(--red);border-color:var(--red)}
+.stat.dk b,.stat.dk span{color:#fff}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:13px}
+.chip.m{font-family:var(--f-mono);font-size:12px}
+.quote{border-left:3px solid var(--orange);padding:4px 0 4px 16px;color:var(--ink);font-size:15px}
+.quote cite{display:block;margin-top:8px;font-style:normal;font:500 12px var(--f-mono);color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.two{display:grid;gap:24px;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr))}
+/* tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:22px 0 0}
+.tab{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;font-size:13px;font-weight:500}
+.tab[aria-selected="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.panel{margin-top:20px}
+/* hero */
+.hero{display:grid;gap:28px;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);align-items:center;padding-block:20px 8px}
+@media(max-width:820px){.hero{grid-template-columns:1fr}}
+.hero-art{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:var(--shadow)}
+.hero-art .row{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0;border-bottom:1px dashed var(--line);gap:12px}
+.hero-art .row:last-child{border:0}
+.hero-art .row b{font:700 24px var(--f-display);color:var(--red-ink);font-variant-numeric:tabular-nums}
+.hero-art .row span{font-size:13px;color:var(--muted);text-align:right}
+.cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+/* acts on home */
+.act{margin-top:30px}
+.act h3{font:500 11px var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.tile{display:flex;gap:14px;align-items:flex-start;text-align:left;width:100%;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.tile:hover{border-color:var(--orange)}
+.tile .n{font:500 12px var(--f-mono);color:var(--red-ink);padding-top:3px;min-width:20px}
+.tile b{display:block;font:600 15px var(--f-display);margin-bottom:3px}
+.tile span{font-size:13px;color:var(--muted)}
+/* explorer */
+.explorer{display:grid;gap:22px;grid-template-columns:minmax(0,320px) minmax(0,1fr);align-items:start}
+@media(max-width:820px){.explorer{grid-template-columns:1fr}}
+.stack{display:flex;flex-direction:column;gap:10px;perspective:700px}
+.slab{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:16px 18px;text-align:left;transition:transform .2s,border-color .2s,background .2s}
+.slab small{display:block;font:500 11px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.slab b{font:700 17px var(--f-display)}
+.slab[aria-pressed="true"]{background:var(--red);border-color:var(--red);color:#fff;transform:translateX(10px)}
+.slab[aria-pressed="true"] small{color:rgba(255,255,255,.8)}
+.chain{display:flex;flex-wrap:wrap;gap:0}
+.stage{flex:1 1 150px;min-width:0;border:1px solid var(--line);background:var(--surface);padding:12px 14px;text-align:left;margin:0 -1px -1px 0}
+.stage small{font:500 11px var(--f-mono);color:var(--muted)}
+.stage b{display:block;font:600 14px var(--f-display);margin-top:2px}
+.stage[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink);position:relative;z-index:1}
+.stage[aria-pressed="true"] small{color:var(--bg);opacity:.7}
+.detail{margin-top:14px}
+.grp{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+.grp h4{font-size:14px;margin-bottom:10px;color:var(--red-ink)}
+/* timeline */
+.tl{position:relative;margin:26px 0 0;padding:0;list-style:none}
+.tl::before{content:"";position:absolute;left:15px;top:6px;bottom:6px;width:2px;background:var(--line)}
+.tl li{position:relative;padding:0 0 18px 48px}
+.tl .dot{position:absolute;left:0;top:0;width:32px;height:32px;border-radius:50%;background:var(--surface);border:2px solid var(--red);display:grid;place-items:center;font:600 12px var(--f-mono);color:var(--red-ink)}
+.tl .now .dot{background:var(--red);color:#fff;border-color:var(--red)}
+.tl .yr{font:500 11px var(--f-mono);color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.tl b{font:700 17px var(--f-display);display:block}
+.tl span.s{font-size:14px;color:var(--muted)}
+/* waves */
+.waves{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr))}
+.wave{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;min-width:0}
+.wave .w{font:500 11px var(--f-mono);color:var(--red-ink);letter-spacing:.08em}
+.wave b{display:block;font:700 15px var(--f-display);margin:2px 0}
+.wave .d{font:400 12px var(--f-mono);color:var(--muted)}
+.wave p{font-size:13px;color:var(--muted);margin-top:6px}
+/* numbered list (rocks) */
+.rocks{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));list-style:none;margin:0;padding:0}
+.rocks li{display:flex;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-weight:500;font-size:14px}
+.rocks i{font:600 13px var(--f-mono);font-style:normal;width:30px;height:30px;border-radius:50%;border:2px solid var(--red);display:grid;place-items:center;color:var(--red-ink);flex:none}
+.kv{display:grid;gap:8px}
+.kv div{display:flex;justify-content:space-between;gap:16px;border-bottom:1px dashed var(--line);padding:7px 0;font-size:14px}
+.kv div span:first-child{color:var(--muted)}
+.kv div b{font-weight:600;text-align:right}
+/* nav */
+.pager{display:flex;gap:12px;justify-content:space-between;margin-top:44px;padding-top:20px;border-top:1px solid var(--line);flex-wrap:wrap}
+.pg{flex:1 1 220px;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:12px 16px}
+.pg:hover{border-color:var(--orange)}
+.pg small{display:block;font:500 11px var(--f-mono);color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.pg b{font:600 15px var(--f-display)}
+.pg.r{text-align:right}
+footer{padding:24px 0 36px;color:var(--muted);font-size:12px}
+/* contents overlay */
+.ov{position:fixed;inset:0;z-index:40;background:color-mix(in srgb,var(--bg) 94%,transparent);overflow:auto;
+  padding:calc(env(safe-area-inset-top,0px) + 20px) max(16px,env(safe-area-inset-left,0px)) 40px max(16px,env(safe-area-inset-left,0px))}
+.ov .hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.fade{animation:fd .3s ease both}
+@keyframes fd{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ===== v2: immersive layer ===== */
+:root{--hero1:#2a0506;--hero2:#120a0a;--glow:#e44500;--pill:rgba(255,255,255,.08)}
+body{padding-left:0;padding-right:0}
+.wrap{padding-inline:max(16px,env(safe-area-inset-left,0px))}
+.top{position:fixed;left:0;right:0;top:calc(env(safe-area-inset-top,0px) + 10px);z-index:30;background:none;border:0;pointer-events:none;padding-inline:max(12px,env(safe-area-inset-left,0px))}
+body::before{display:none}
+.top .wrap{pointer-events:auto;max-width:1120px;margin:0 auto;padding:8px 10px 8px 14px;border-radius:999px;background:color-mix(in srgb,var(--surface) 82%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line);box-shadow:var(--shadow)}
+.bar{display:none}
+.btn.go{background:var(--red);border-color:var(--red);color:#fff}
+.btn.go:hover{filter:brightness(1.12)}
+main{padding-block:0;min-height:100vh}
+.page{padding-top:96px}
+.hero2{position:relative;overflow:hidden;color:#f4eeec;background:radial-gradient(1200px 520px at 78% 0%,rgba(228,69,0,.28),transparent 60%),radial-gradient(900px 500px at 0% 100%,rgba(157,1,2,.45),transparent 60%),linear-gradient(180deg,var(--hero1),var(--hero2));padding:128px 0 56px}
+.hero2::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:56px 56px;mask-image:linear-gradient(180deg,#000 30%,transparent 100%);-webkit-mask-image:linear-gradient(180deg,#000 30%,transparent 100%)}
+.hero2 .wrap{position:relative}
+.hero2 .eyebrow{color:#ff9a6b}
+.hero2 h1{font-size:clamp(38px,7vw,78px);letter-spacing:-.035em;font-weight:700;line-height:1.02;max-width:14ch}
+.hero2 h1 em{font-style:normal;font-weight:300;display:block;color:#e8d9d4}
+.hero2 .lede{color:#cdbdb8;max-width:56ch}
+.hero2 .btn{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.22);color:#fff}
+.hero2 .btn.go{background:#e44500;border-color:#e44500}
+.ov-card{margin-top:44px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);backdrop-filter:blur(6px);border-radius:20px;padding:24px}
+.ov-card .eyebrow{margin-bottom:10px}
+.ov-card p{font-size:clamp(16px,2vw,21px);color:#e9dfdb;max-width:70ch}
+.ov-card p b{color:#ffb089}
+.ov-grid{display:grid;gap:12px;margin-top:20px;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr))}
+.ov-grid div{border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:14px;background:rgba(0,0,0,.18)}
+.ov-grid b{display:block;font:700 28px var(--f-display);color:#ff9a6b;font-variant-numeric:tabular-nums}
+.ov-grid span{font-size:12px;color:#bfaea9}
+.strip{display:flex;flex-wrap:wrap;gap:10px 28px;padding:16px 0;color:#d7c8c3;font:500 12px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;border-top:1px solid rgba(255,255,255,.12);margin-top:28px}
+/* acts on home */
+.actrow{display:grid;grid-template-columns:minmax(0,280px) minmax(0,1fr);gap:40px;padding:56px 0;border-top:1px solid var(--line)}
+@media(max-width:820px){.actrow{grid-template-columns:1fr;gap:18px;padding:36px 0}}
+.actrow .l{align-self:start;position:sticky;top:96px}
+@media(max-width:820px){.actrow .l{position:static}}
+.actrow .l small{display:block;font:500 12px var(--f-mono);letter-spacing:.14em;color:var(--muted);margin-bottom:10px}
+.actrow .l h3{font:700 clamp(26px,3vw,36px) var(--f-display);color:var(--red-ink);letter-spacing:-.02em;padding-bottom:14px;border-bottom:2px solid var(--red)}
+.actrow .l p{margin-top:14px;color:var(--muted);font-size:14px}
+.rows{border-left:1px solid var(--line);padding-left:32px}
+@media(max-width:820px){.rows{border-left:0;padding-left:0}}
+.rowl{display:grid;grid-template-columns:44px 1fr 24px;gap:14px;align-items:start;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:22px 0}
+.rowl:last-child{border-bottom:0}
+.rowl .n{font:300 38px var(--f-display);color:var(--muted);line-height:1}
+.rowl b{display:block;font:600 19px var(--f-display);margin-bottom:5px}
+.rowl span.s{display:block;color:var(--muted);font-size:14px}
+.rowl .a{color:var(--muted);transition:transform .2s,color .2s;padding-top:6px}
+.rowl:hover .a{transform:translateX(4px);color:var(--orange)}
+.rowl:hover b{color:var(--red-ink)}
+/* tower */
+.tower-page{padding-top:92px}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 30px}
+.pill{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 16px;font:500 12px var(--f-mono);letter-spacing:.04em;display:flex;gap:8px;align-items:center}
+.pill i{width:7px;height:7px;border-radius:50%;border:1.5px solid var(--muted)}
+.pill[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.pill[aria-selected="true"] i{background:var(--orange);border-color:var(--orange)}
+.tw{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:40px;align-items:center}
+@media(max-width:900px){.tw{grid-template-columns:1fr}}
+.tw h2{font-size:clamp(34px,5vw,56px);letter-spacing:-.03em;font-weight:600;margin:6px 0 14px}
+.scene{perspective:1400px;height:420px;display:grid;place-items:center;position:relative}
+@media(max-width:900px){.scene{height:340px;order:-1}}
+.iso{position:relative;width:240px;height:240px;transform:rotateX(58deg) rotateZ(-38deg);transform-style:preserve-3d}
+.sl{position:absolute;left:0;top:0;width:240px;height:240px;border-radius:18px;border:1px solid var(--line);background:var(--surface2);display:flex;align-items:flex-end;padding:14px;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.2,.8,.2,1),opacity .5s,background .5s,box-shadow .5s;cursor:pointer;box-shadow:0 14px 0 -4px color-mix(in srgb,var(--ink) 18%,transparent)}
+.sl span{font:600 12px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);transform:rotateZ(0)}
+.sl.on{background:linear-gradient(135deg,#9d0102,#e44500 70%,#f1a35a);border-color:transparent;box-shadow:0 18px 0 -4px rgba(120,20,0,.45),0 40px 60px rgba(228,69,0,.3)}
+.sl.on span{color:#fff}
+.sl.dim{opacity:.38}
+.screen{position:absolute;right:0;bottom:30px;width:min(260px,52%);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px;box-shadow:0 20px 50px rgba(0,0,0,.25);font-size:11px;z-index:2}
+@media(max-width:900px){.screen{position:static;width:100%;margin-top:12px}}
+.screen b{display:block;font:600 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--red-ink);margin-bottom:8px}
+.screen div.r{display:flex;justify-content:space-between;gap:8px;padding:4px 0;border-bottom:1px dashed var(--line);color:var(--muted)}
+.screen div.r:last-child{border:0}
+.mini{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));margin-top:22px}
+.mini .tile{align-items:center}
+.sub{margin-top:56px;padding-top:28px;border-top:1px solid var(--line)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .hero2{--x:0}}
+.scene{padding-top:90px}.iso{top:30px;margin-left:-150px}.screen{bottom:0}
+@media(max-width:900px){.iso{margin-left:0}}
+.btn{white-space:nowrap}
+@media(max-width:640px){.brand span,#towerBtn{display:none}.top .wrap{padding:8px 10px}.hero2{padding-top:104px}.scene{padding-top:40px}}
+</style>
+
+<div class="top">
+  <div class="wrap">
+    <button class="brand" id="homeBtn" aria-label="Home"><div class="mark">K</div><div><b>KaarTech</b><span>Expertise portal</span></div></button>
+    <div class="sp"></div>
+    <button class="btn" id="tocBtn">☰ Contents</button>
+    <button class="btn" id="themeBtn" aria-label="Toggle theme">Theme</button><button class="btn go" id="towerBtn">The tower →</button>
+  </div>
+  <div class="bar"><i id="prog"></i></div>
+</div>
+<main id="main"></main><div class="wrap"><footer>KaarTech expertise portal · Oil &amp; Gas and Commodity Management · October 2026</footer></div>
+<div class="ov" id="ov" hidden>
+  <div class="wrap">
+    <div class="hd"><h2 style="font-size:24px">Contents</h2><button class="btn" id="closeToc">Close</button></div>
+    <div id="tocBody"></div>
+  </div>
+</div>
+
+<script>
+const E=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const chips=a=>`<div class="chips">${a.map(x=>`<span class="chip">${E(x)}</span>`).join('')}</div>`;
+const ul=a=>`<ul>${a.map(x=>`<li>${E(x)}</li>`).join('')}</ul>`;
+const stat=(n,l,dk)=>`<div class="stat${dk?' dk':''}"><b>${E(n)}</b><span>${E(l)}</span></div>`;
+const sec=(t,body,sm)=>`<section class="sec"><h3>${E(t)}${sm?`<small>${E(sm)}</small>`:''}</h3>${body}</section>`;
+const head=(ey,t,l)=>`<div class="eyebrow">${E(ey)}</div><h2 class="pt">${E(t)}</h2>${l?`<p class="lede">${E(l)}</p>`:''}`;
+const card=(t,body)=>`<div class="card"><h4>${E(t)}</h4>${body}</div>`;
+
+/* ---------------- content ---------------- */
+const PAGES=[];
+const add=(id,act,title,sum,render)=>PAGES.push({id,act,title,sum,render});
+
+add('about',1,'KaarTech at a glance','Scale, mission and the proof points behind them.',()=>
+ head('Act I · Who we are','Your dependable partner, delivering trustworthy services.')+
+ sec('KaarTech overview',`<div class="grid g3">${[['20+','Years of business experience'],['450+','Trusted customers globally'],['50+','Business awards and accolades'],['3300+','Global projects completed'],['15+','Presence across global locations'],['1000+','AI-trained professionals']].map(x=>stat(...x)).join('')}</div>`)+
+ `<div class="two sec">${card('Our mission',`<p>To remain a socially responsible corporate entity, which will instil a sense of pride, joy and accomplishment, in every facet of its interaction, to everyone associated, be it the employees, customers, vendors or stakeholders.</p>`)}${card('Our vision',`<p>To be the most trustworthy partner in our customer’s AI-led Enterprise Operating System (EOS) transformation journey by leveraging our deep expertise in Business Consulting, Enterprise Applications, Data, Cloud and AI through our Platforms &amp; Services.</p>`)}</div>`+
+ sec('Excellence, by dimension',`<div class="grid g3">
+  ${card('Organizational',`<div class="kv"><div><span>SAP Excellence Awards</span><b>45+</b></div><div><span>GPTW certified</span><b>93%</b></div><div><span>Business Innovation Awards</span><b>10+</b></div><div><span>GPTW</span><b>5x certified</b></div></div>`)}
+  ${card('Market',`<div class="kv"><div><span>Repeat customer business</span><b>&gt;80%</b></div><div><span>Gartner Peer Insights</span><b>4.5/5</b></div><div><span>Gartner Peer Insights reviews</span><b>35+</b></div></div>`)}
+  ${card('People',`<div class="kv"><div><span>Employees</span><b>3000+</b></div><div><span>Attrition</span><b>&lt;4.2%</b></div><div><span>Certified SAP consultants</span><b>90%</b></div><div><span>Employee-centric policies</span><b>40+</b></div></div>`)}
+ </div>`)+
+ `<div class="two sec">
+  ${sec('Transformation excellence',`<div class="grid g2">${[['125+','S/4HANA transformations'],['60+','Commerce projects'],['80+','Data engineering and analytics projects'],['160+','Cloud projects']].map(x=>stat(...x)).join('')}</div>`)}
+  ${sec('Managed services excellence',`<div class="grid g2">${[['240K+','Support hours per month'],['50+','Active support projects'],['99.5%','Comprehensive SLA'],['15 MN','Business transactions per month']].map(x=>stat(...x)).join('')}</div>`)}
+ </div>`+
+ sec('AI excellence',`<div class="grid g3">${[['150+','AI projects'],['250+','Forward deployed engineers'],['700+','AI agents']].map(x=>stat(...x,true)).join('')}</div>`)+
+ sec('Recognised as an SAP services leader by top analyst firms',chips(['ISG','Everest Group','IDC','Avasant','NelsonHall']))+
+ `<p class="lede" style="margin-top:22px">Faster time-to-value. Lower transformation risk. Outcomes you can predict.</p>`);
+
+add('services','1','Services and platforms','What we offer, how we engage, and the tools behind it.',()=>
+ head('Act I · Who we are','Six service lines, five platform assets, four ways to engage.')+
+ sec('Service portfolio',`<div class="grid g3">${[
+  ['Digital transformation',['Advisory & roadmap','S/4HANA & RISE implementations','Product engineering & modernization','Enterprise architecting']],
+  ['Cloud offerings',['Managed cloud hosting','ICT professional services','Remote infrastructure management','Data integration services']],
+  ['AI & automation',['AI roadmap and advisory','Agentic orchestration','Multi-LLM framework architecting','Kaar Enterprise Operating System (KEOS)']],
+  ['Data & analytics',['ETL & data engineering','Data lakes & warehousing','Big data & business analytics','Dashboards & reporting']],
+  ['Enterprise security',['Governance, risk & compliance','Identity & access management','Cybersecurity operations','Secure infrastructure management']],
+  ['Business process management',['Process mining','Workflow orchestration','Low-code development','Blockchain solutions']]
+ ].map(([t,a])=>card(t,ul(a))).join('')}</div>`)+
+ sec('Platform assets',chips(['KAFY','Guardian','Wingman','KEOS','KEBS','KTern.AI']))+
+ sec('How we engage',`<div class="grid g4">${[['Resell','Authorized reseller of leading enterprise solutions'],['Services','Industry-specific solutions, tailored to your needs'],['Build','Specialized, industry-focused add-on solutions'],['Support','Seamless operation and stability, end to end']].map(([t,s])=>card(t,`<p>${E(s)}</p>`)).join('')}</div>`)+
+ sec('Technology partners',chips(['SAP S/4HANA','SAP Concur','SAP Ariba','SAP BTP','SAP Signavio','SAP Joule','SAP BW','SAP CRM','WalkMe','SAP Business Data Cloud','SAP SuccessFactors','SAP Hybris','Microsoft','Google Cloud','Azure','Anthropic','Automation Anywhere','Liferay','Cloudera','Informatica','AWS','Dataiku','Snowflake','UiPath','Qlik','Databricks','Fivetran','Salesforce','ServiceNow','Ingram Micro','Beam','Datadog']))+
+ `<div class="sec"><div class="stat dk"><b>4.4/5</b><span>Global customer rating · Gartner Peer Insights</span></div></div>`);
+
+add('oilgas','2','Oil and gas expertise','650+ projects and a dedicated IS-Oil and commodity practice.',()=>
+ head('Act II · Oil & Gas and CTRM','Two practices: broad oil and gas delivery, and deep IS-Oil and commodity management.')+
+ `<div class="two sec">
+  <div class="card"><div class="eyebrow">Oil &amp; gas excellence</div><div class="grid g2" style="margin-bottom:16px">${stat('650+','Projects')}${stat('700+','Consultants')}</div>
+   <h4>Signature solutions</h4>${ul(['Implementing MPS system, automating payment processes','Digital twin streamlined supply chain operations','Introducing digital ID verification, Smart ID','E2MAS platform for precise scenario analysis and data visualization','Unified procurement strategy for inventory management','Improved external system connectivity and enhanced data reliability'])}</div>
+  <div class="card"><div class="eyebrow" style="color:var(--orange)">IS-Oil &amp; commodity management expertise</div><div class="grid g2" style="margin-bottom:16px">${stat('54+','Projects')}${stat('50+','IS-Oil / CTRM consultants')}</div>
+   <h4>Signature solutions</h4>${ul(['Implementation, blueprint and POC for commodity pricing','Deal management and secondary distribution on SAP IS-Oil','SAP Commodity Pricing Engine and CTRM (Allegro) integration'])}</div>
+ </div>`+
+ sec('Trusted by',chips(['Aramco','ADNOC','OQ','OQ8','Motiva','Murphy Oil','Equate','Orpic','KNPC','Phillips 66','Engen','Filoil','Centurion','Thungela','Shell','Nornickel','Par Pacific','The Andersons']),'a selection'));
+
+add('portfolio','2','The portfolio tower','Climb the stack: base, enterprise, industry, and the value chain on top.',()=>
+ `<div class="tower-page"><div class="eyebrow">Act II · Oil &amp; Gas and CTRM</div><div class="pills" id="pills" role="tablist"></div><div class="tw"><div id="twL"></div><div class="scene" id="scene"></div></div><div class="sub" id="twD"></div></div>`);
+
+add('accelerators','2','IS-Oil accelerators','Reusable assets that shorten fit-to-standard through cutover.',()=>
+ head('Act II · Oil & Gas and CTRM','Accelerators built for IS-Oil.')+
+ `<div class="two sec"><div class="stat dk"><b>34+</b><span>Process flows. Pre-defined business processes</span></div><div class="card"><h4>Fit-to-standard</h4><p>Ready configuration checklists.</p></div></div>`+
+ sec('Process flow library',chips(['Record to Report','Sales & Distribution','Aviation','Exchange','Secondary Cost','Fuel Card']))+
+ sec('Tools and artifacts',`<div class="grid g3">${[
+  ['Requirement templates','Structured templates for FTS, SDD, KDS, KDD and FRS documentation.'],
+  ['System accelerator','Pre-configured system.'],
+  ['Master data templates','Standardized templates for efficient data collection, validation and upload.'],
+  ['Data migration','Proven methodologies and tools for seamless legacy data transition.'],
+  ['Test scripts','Comprehensive test scenarios covering critical business flows and edge cases.'],
+  ['Training artifacts','Train-the-Trainer methodology, Enable Now guides and interactive tours.'],
+  ['Cutover experience','Detailed cutover plans and checklists to ensure smooth go-live transition.'],
+  ['Domain knowledge','Deep business-specific knowledge in commodity management and SAP IS-Oil.']
+ ].map(([t,s])=>card(t,`<p>${E(s)}</p>`)).join('')}</div>`));
+
+const JOURNEY=[
+ ['2017 – 2018','FILOIL','Greenfield & support','SAP IS-Oil & Gas Downstream'],
+ ['2019 – 2020','ENOC','Greenfield with aviation','Aviation & core modules'],
+ ['2020 – 2021','ENGEN','Implementation, blueprint & POC','Commodity pricing · Allegro CTRM'],
+ ['2020 – 2021','NORNICKEL','Greenfield & support','SAP Commodity Pricing Engine'],
+ ['2020 – 2025','ARAMCO','Roll-out, upgrade & support','SAP IS-Oil & Commodity Management'],
+ ['2021 – 2025','CENTURION','Greenfield, upgrade & support','SAP IS-Oil & Commodity Management'],
+ ['2022 – 2024','AL-QARAYAN','Greenfield S/4HANA','SAP Commodity Management'],
+ ['2023 – 2024','PHILLIPS 66','Greenfield, upgrade & support','Commodity, IS-Oil, core & aviation'],
+ ['2023 – Now','ORPIQ','Upgrade & support','SAP IS-Oil & Gas, Deal & SDM'],
+ ['2024 – Now','ADNOC','Greenfield, upgrade & support','SAP IS-Oil & Gas, Finance'],
+ ['2024 – 2026','MOTIVA','Greenfield','SAP IS-Oil & Commodity Management'],
+ ['2025 – Now','THUNGELA','Roll-out, upgrade & support','SAP Commodity Management & Oil & Gas']];
+add('journey','2','Our journey','Twelve engagements, 2017 to today.',()=>
+ head('Act II · Oil & Gas and CTRM','The oil & gas and commodity management journey.')+
+ `<ol class="tl">${JOURNEY.map((j,i)=>`<li class="${/Now/.test(j[0])?'now':''}"><div class="dot">${i+1}</div><div class="yr">${E(j[0])}</div><b>${E(j[1])}</b><span class="s">${E(j[2])} · ${E(j[3])}</span></li>`).join('')}</ol>`);
+
+add('voices','2','Client testimonials','In their words.',()=>
+ head('Act II · Oil & Gas and CTRM','What clients say.')+
+ `<div class="grid g2 sec">${[
+  ['In recognition of outstanding performance, dedication, and commitment to excellence… consistently demonstrating high levels of professionalism and significantly contributing to the success and growth of OQ.','Ali Al Lawati · Chief People & Tech Officer, OQ'],
+  ['Appreciate your unwavering support in resolving the PPQM/SSD issue. Your dedication and timely efforts were key to completing the task successfully. Thank you for your commitment and teamwork!','Khawla Abdulla A. M. · ADNOC Sour Gas, Ops'],
+  ['Thungela appreciates the SAPOCOM support… the team does the hard yards and deserves full credit for their dedication to the project success.','Bernard Dalton · Head of Marketing, Thungela'],
+  ['SAPOCOM experts played a key role in the implementation and launch of new commodity pricing engine (CPE/CPF) functionality… from configuration to supporting developments and testing.','Vladimir Soloviev · Executive Director, PwC'],
+  ['SAPOCOM delivered as per the engagement terms and to the full satisfaction of Kaisa Consulting. All deliverables were completed on time resulting in a successful Implementation of SAP IS-OIL.','Dominic M. Pinili · Head of Delivery, Kaisa'],
+  ['Team SAPOCOM worked closely with the SAP Team and delivered as per the engagement terms and to the full satisfaction of the client. All deliverables were completed on time successfully.','Sanjay Pasbola · Director, Elliott Moss']
+ ].map(([q,c])=>`<div class="card"><div class="quote">“${E(q)}”<cite>${E(c)}</cite></div></div>`).join('')}</div>`);
+
+add('why','2','Why KaarTech','Growth, share and depth in oil and gas.',()=>
+ head('Act II · Oil & Gas and CTRM','Why KaarTech for oil and gas.')+
+ `<div class="grid g3 sec">${stat('51%','Revenue growth in FY25 in oil & gas',true)}${stat('14%','Market share in GCC for oil & gas',true)}${stat('200+','Years combined SAP experience in IS-Oil & CTRM',true)}</div>`+
+ `<div class="grid g2 sec">${[
+  ['Industry-specific ERP implementations',['Oil exploration, drilling, fleet & procurement solutions','Deep SAP IS-Oil & commodity management competencies','Commodity management integrated with SAP MM, SD & FI']],
+  ['Global SAP implementation partner',['Track record with leading Middle East oil & gas enterprises','Delivery across multiple geographies (NA, EMEA etc.)','S/4HANA roll-outs & support, multi-vendor experience']],
+  ['Oil & gas energy transition',['Supporting oil & gas companies’ energy transition','Renewable initiatives through digital transformation']],
+  ['Assets & accelerators',['Reusable assets, accelerators & demo system','Product improvement advisory & framework','SAP Core → Commodity Management → Oil & Gas']],
+  ['Balanced & next-gen workforce',['SAP-focused talent with AI-driven workforce solutions','Ready-to-deploy A-Team with deep product knowledge']]
+ ].map(([t,a])=>card(t,ul(a))).join('')}</div>`);
+
+/* Motiva */
+const WAVES=[
+ ['0','Global Prepare','','Project charter · System setup · VDM'],
+ ['1','PTP 1/2',"Nov 11th ’24",'Ariba SLP · Ariba Guided Sourcing · Business Partner Activation'],
+ ['2','HSSE 1/2',"Jun 2nd ’25",'Incident, Risk · Audit Mgmt. · Occ. Health · Env Mgmt.'],
+ ['3','S/4 Core',"July 1st ’26",'RTR 1/2 · RTP 2/2 · EAM 1/2 · TAX'],
+ ['4','SAC Planning',"Jul 1st ’26",'PS · EPPM'],
+ ['5','HSSE 2/2',"Dec 8th ’25",'Sustainability control tower'],
+ ['6','EAM 2/2',"Sep 1st ’26",'Asset Performance Management · IMS · SAP Service & Asset Manager (SSAM)'],
+ ['7','S/4 HVC',"Sep 11th ’26",'HVC · RPP · M&S · TMS · RTR 2/2'],
+ ['8','Security & Control',"Nov 1st ’26",'Process Control · Business Integrity Mgmt.']];
+const MOTIVA={
+ 'The customer':()=>`
+  <div class="two"><div><p class="lede" style="margin-top:0">Headquartered in Houston, Texas, Motiva refines, distributes, and markets petroleum products throughout the Americas. For more than two decades, Motiva has provided the energy Americans depend upon.</p>
+  <div class="card" style="margin-top:14px"><h4>Mission</h4><p>We safely, responsibly, and reliably produce essential transportation fuels, base oils, and petrochemicals that people across the globe rely on for security, prosperity, and overall quality of life.</p></div></div>
+  <div class="card"><h4>From 1903 to 2026</h4><div class="kv"><div><span>1903</span><b>25 acres · 850 barrels per day</b></div><div><span>2026</span><b>1,400 acres · 730,000 barrels per day</b></div><div><span>Total throughput</span><b>730,000 bpd</b></div><div><span>Fuels produced daily</span><b>590,000 barrels</b></div></div><p style="margin-top:8px">Gasoline · Diesel · Jet fuel and other products</p></div></div>
+  ${sec('Facts',ul(['Formed in 1998 as a joint venture between Shell, Texaco and Aramco','Now fully owned by Aramco','~2,400 employees',"North America’s largest refinery",'Largest base oil plant in the Western Hemisphere','Producer of chemical building blocks','~10 billion gallons of branded and unbranded fuel and base oils supplied annually','~1 million vehicles refueled daily with fuel from the refinery','Gasoline sold through Shell and 76 brands','Products distributed to more than 15 countries']).replace('<ul>','<div class="card"><ul>').replace('</ul>','</ul></div>'))}
+  ${sec('A highly integrated business',`<div class="grid g2">${[['Robust supply and logistics','Robust feedstock and supply options and optimization capabilities across the value chain'],['Large, complex refinery','Highly complex refinery capable of processing over 100 crudes while producing fuels and base oils products'],['Integrated chemical plant','Mixed feed cracker provides flexibility to crack feeds from multiple refinery units, creating additional feedstock optionality'],['High-return fuel sales business','Exceptional branding and differentiated fuel strategy with sales higher than refinery production']].map(([t,s])=>card(t,`<p>${E(s)}</p>`)).join('')}</div>`)}`,
+ 'Assessment':()=>`
+  <p class="lede" style="margin-top:0">S/4HANA Business Transformation Assessment: KTern.AI roadmap for Motiva.</p>
+  <div class="card" style="margin-top:14px"><h4>Engagement summary</h4><p>KaarTech and KTern.AI ran a Business Transformation Assessment for Motiva to modernize its business processes and IT landscape, replace scattered applications with a unified source of truth, and enable data-driven decisions. Across 18 sessions and 27 hours of engagement workshops, the team captured existing pain areas, proposed mitigation plans for the future state, and mapped future business processes to S/4HANA scope items.</p></div>
+  <div class="grid g4 sec">${stat('18','Sessions')}${stat('27 h','Of workshops')}${stat('259','Processes in KTern-proposed scope')}${stat('315','Processes in SAP-recommended scope')}</div>
+  <div class="two sec"><div class="card"><h4>Key facts</h4>${ul(['Deep dive per business area: pain points, architecture, scope, value drivers','KTern-proposed scope: 11 LoBs, 36 process groups, 259 processes','SAP-recommended scope: 13 LoBs, 51 process groups, 315 processes','20+ legacy applications identified for retirement, including Right Angle','Integration modernized with SAP BTP Integration Suite and Dell Boomi','Value drivers and industry trends defined for every business area'])}</div>
+  <div class="card"><h4>Pain points and mitigation</h4><div class="kv">${[['Manual close & reporting','New GL, Closing Cockpit, ACDOCA'],['Standalone EHS apps (CARE, KMS, Eclipse)','Centralized SAP EHS'],['FTP-based interfaces, no APIs','BTP Integration Suite, Dell Boomi'],['Manual collections & provisions','Collections mgmt., accrual engine']].map(([a,b])=>`<div><span>${E(a)}</span><b>${E(b)}</b></div>`).join('')}</div></div></div>
+  ${sec('Business and technical streams',chips(['Record to Report – Finance','Record to Report – Project Systems','Request to Pay','HVC, Sales & Marketing','Enterprise Asset Management (EAM)','Refine Produce Products','Demand & Supply Planning','Health, Safety, Security & Env.','Enterprise Integration','Custom Development','Data Management']))}`,
+ 'Transformation':()=>`
+  <p class="lede" style="margin-top:0">An integrated, data-driven transformation delivered with the SAP Business Transformation Suite: a multi-year journey to modernize Motiva’s SAP S/4HANA landscape, driving process excellence, enterprise architecture simplification, operational efficiency and measurable business value through an integrated toolchain.</p>
+  <div class="grid g3 sec">${[['150+','Total applications'],['30+','Applications sunset'],['300+','Resources'],['8','Implementation waves'],['2400+','Impacted users']].map(x=>stat(...x)).join('')}</div>
+  <div class="card sec"><h4>After the assessment</h4><p>The transformation was structured into 8 implementation waves, replacing the Right-Angle solution with an advanced CTRM system. Clean core practices were adopted to maintain solution integrity, and KTern.AI was used for governance, ensuring successful project management and execution.</p></div>
+  ${sec('Waves',`<div class="waves">${WAVES.map(w=>`<div class="wave"><div class="w">WAVE ${w[0]}</div><b>${E(w[1])}</b>${w[2]?`<div class="d">${E(w[2])}</div>`:''}<p>${E(w[3])}</p></div>`).join('')}</div>`)}
+  <div class="two sec"><div>${sec('Core modules',`<div class="grid">${[['Core SAP S/4HANA','FICO · MM · SD · EAM · PPM · PS · TAX'],['Analytics & Data','SAC Planning · SAC Analytics · Data Warehouse · BDC'],['Ariba Procurement','Supplier Lifecycle Mgmt. · Supplier Network · Risk Management'],['EHS & Sustainability','Environment Mgmt. · Incident Mgmt. · Occupational Health · Risk Mgmt. · Waste Mgmt. · Sustainability Control Tower'],['Asset Management','Asset Performance Management · SSAM Mobile Maintenance'],['Governance, Security & Logistics','IAG · GRC · Extended Warehouse Management']].map(([t,s])=>`<div class="grp"><h4>${E(t)}</h4><p style="font-size:13px;color:var(--muted)">${E(s)}</p></div>`).join('')}</div>`)}</div>
+  <div>${sec('Horizontals',`<div class="grp">${chips(['Testing','Training','Organizational Change Management','Project Management Office (PMO)','Data Migration','Basis & Security'])}</div>`)}${sec('Streams delivered',chips(['Hydrocarbon Value Chain (HVC)','Sales & Marketing','Warehouse Operations','Security & Controls','Data, Reporting & Analytics (DRA)','Technical / Integration','Basis','OCM','Testing']))}</div></div>
+  ${sec('Value-driven results',ul(['8 implementation waves','50+ digital use cases across business workstreams','COEs established for Data, OCM, Testing & BTP','Clean core adoption and CTRM replacement of Right Angle','AI/ML execution strategy and value discovery outcomes','Delivered using SAP Signavio, BTP, Ariba, KTern.AI, Tosca, Syniti, Enable Now & Onapsis']).replace('<ul>','<div class="card"><ul>').replace('</ul>','</ul></div>'))}`,
+ 'Outcomes':()=>`
+  <p class="lede" style="margin-top:0">Measurable business value delivered across finance, operations and people. The program delivered a stable, standardized S/4HANA foundation on schedule, validated by data accuracy, financial performance and a disruption-free go-live.</p>
+  <div class="grid g3 sec">${[['$142M','Inventory valuation migrated'],['$1.6B','Max payment run enabled'],['99%+','Data migration accuracy'],['30+','Legacy apps sunset'],['2,400+','Users enabled']].map(x=>stat(...x,true)).join('')}</div>
+  <div class="two sec">${card('Business and financial impact',`<div class="kv">${[['Financial data integrity','Migrated and validated ~$142M in inventory valuation and 2 million G/L postings, preserving complete financial history.'],['Treasury readiness','Enabled payment runs of up to $1.6B, proving readiness for high-value, high-volume treasury operations.'],['Data migration quality','99%+ accuracy migrating 56+ master data and 20 transactional objects, with zero post-go-live critical defects.'],['Financial closing','On-time financial close within the first month post go-live.']].map(([a,b])=>`<div style="display:block"><b style="display:block;text-align:left">${E(a)}</b><span style="color:var(--muted)">${E(b)}</span></div>`).join('')}</div>`)}
+  ${card('Delivery and adoption outcomes',ul(['Successful multi-wave go-lives, zero business disruption','Application rationalization: 30+ legacy apps sunset','Hypercare stabilization: rapid issue resolution, stronger confidence','User enablement: 2,400+ users trained and adopted','Future-ready foundation for continued transformation']))}</div>`,
+ 'Engineering':()=>`
+  <p class="lede" style="margin-top:0">Deep SAP expertise applied through a clean-core-first, best-practice delivery methodology. Functional and technical teams worked as one, pairing cross-module SAP expertise with disciplined architecture governance to keep the platform standard, scalable and low on technical debt.</p>
+  <div class="grid g3 sec">${[['320+','Tech & integration objects'],['90+','Interfaces delivered'],['60%+','Clean core compliance'],['25+','SAP BTP services'],['300+','Analytics objects']].map(x=>stat(...x)).join('')}</div>
+  <div class="two sec">${card('Functional expertise and methodology',`<div class="kv">${[['Cross-module functional depth','FICO · MM · SD · EAM · PPM · PS · TAX leads paired with technical teams for end-to-end ownership.'],['Clean-core-first methodology','Functional leads challenged customization and validated every requirement against SAP Best Practices during Fit-to-Standard.'],['Solution Standardization Board','Reviewed every WRICEF object for business value, technical justification and long-term maintainability.'],['SAP Activate discipline','Structured Explore → Realize → Deploy governance with FRS/ADD templates and ATC checks at each gate.']].map(([a,b])=>`<div style="display:block"><b style="display:block;text-align:left">${E(a)}</b><span style="color:var(--muted)">${E(b)}</span></div>`).join('')}</div>`)}
+  ${card('Technical and architecture',ul(['Clean core & SAP BTP: 25+ services, 60%+ compliance','Integration modernization: Boomi & Control-M → SAP Integration Suite','Analytics & planning: 300+ objects, SAC Planning replacing Anaplan','Master data governance: 11 objects migrated Pega → SAP MDG','Recognized by SAP MaxAttention as a benchmark implementation']))}</div>
+  <div class="card sec"><div class="quote">“KaarTech brought the right technical and functional expertise across SAP spanning FICO, MM, SD, EAM, PPM, PS, EHS, mobility, TAX, BTP integrations, mobile and data. They knew what they were doing, across the full breadth of the program, not just one area.”<cite>Program feedback</cite></div></div>`,
+ 'People & delivery':()=>`
+  <p class="lede" style="margin-top:0">Engaging stakeholders and partnering across onsite, offshore and SAP teams. A structured OCM and delivery-collaboration model kept business, IT and SI teams aligned throughout the Quantum Leap journey, from stakeholder readiness through day-to-day execution.</p>
+  <div class="grid g3 sec">${[['45+','Stakeholder engagements'],['64','Trainings delivered'],['10','Readiness clinics'],['87%','Average confidence score'],['300+','Delivery resources']].map(x=>stat(...x)).join('')}</div>
+  <div class="two sec">${card('Stakeholder and change engagement',`<div class="kv">${[['Stakeholder analysis & change champions','Mapped change champions and ran Change Impact Assessments (CIA) across processes, roles and the organization.'],['Engagement at every level','45+ engagements: townhalls, workshops, leadership connects, state-of-the-union addresses and pulse checks.'],['Readiness measurement','Change Readiness Assessments (CRA), sentiment surveys and 4 feedback mechanisms tracked adoption risk.'],['Training & enablement','64 trainings and 10 readiness clinics delivered an 87% average confidence score ahead of go-live.']].map(([a,b])=>`<div style="display:block"><b style="display:block;text-align:left">${E(a)}</b><span style="color:var(--muted)">${E(b)}</span></div>`).join('')}</div>`)}
+  ${card('Delivery collaboration',ul(['“3-in-a-Box” model: onsite lead, offshore lead & PM','Onsite–offshore governance calls: daily stand-ups & weekly reviews','Cross-functional teaming: functional, technical, data, integration & business','Golden Scenario scope jointly defined with Motiva business teams','Sustained SAP MaxAttention partnership through iterative design reviews']))}</div>
+  <div class="card sec"><div class="quote">“KaarTech didn’t feel like an outside vendor, they felt like part of the Motiva team. They listened closely, stayed responsive, and worked side by side with us at every step, making the KaarTech–Motiva collaboration one of the strongest parts of this program.”<cite>Program feedback</cite></div></div>`
+};
+add('motiva','3','Motiva case study','An enterprise S/4HANA and CTRM transformation, in six views.',()=>
+ head('Act III · Proof','Motiva: a detailed case study.')+
+ `<div class="tabs" role="tablist" id="mtabs">${Object.keys(MOTIVA).map((k,i)=>`<button class="tab" role="tab" aria-selected="${i===0}" data-k="${E(k)}">${E(k)}</button>`).join('')}</div><div class="panel" id="mpanel"></div>`);
+
+const CASES=[
+ ['Lotte Chemical USA','SAP roles and workflow revamp, powered by KTern','Lotte Chemical USA is a leading global chemical company specializing in petrochemical products such as polyethylene, polypropylene, and ethylene. With a strong focus on innovation, sustainability, and operational efficiency, the organization operates within a complex global business environment involving multiple acquisitions, subsidiaries, and company codes.',
+  ['Implemented a comprehensive SAP Roles & Authorizations and Workflow Revamp using the KTern Digital Execution Framework','Restructured and rationalized business roles based on a compliant role matrix','Reconfigured PR, PO, and invoice workflows to streamline approval processes','Automated role validation and revalidation to strengthen access governance','Used KTern.AI to provide improved governance, transparency, and process oversight'],
+  ['Fragmented workflows and inconsistent business processes across the SAP S/4HANA 1909 environment','Complex user role and authorization structures creating access and compliance risks','Delays in PR, PO, and invoice workflow approvals, impacting procurement efficiency','Difficulty maintaining consistent business rules across multiple company codes','Need for stronger governance, transparency, and control over user access and workflow processes'],
+  [['300+','Business roles restructured under a compliant role matrix'],['100%','Of user role assignments validated and tested post-deployment'],['95%','Reduction in workflow approval delays, accelerating procurement cycles']],['Improved operational transparency and reduced compliance risks']],
+ ['Murphy Oil Corporation','SAP Business Data Cloud modernization','Murphy Oil Corporation is a global independent oil and natural gas exploration and production company headquartered in Houston, Texas, with operations across North America and international markets. Murphy initiated a strategic SAP Business Data Cloud (BDC) modernization program to simplify its data landscape, establish a sustainable SAP-native data foundation, enable self-service analytics, and create an AI-ready environment for future intelligent applications.',
+  ['Conducted a comprehensive assessment of the SAP landscape, reporting architecture, data flows, HANA views, and analytics dependencies','Classified and assessed the approximately 545 HANA views based on complexity, business domain, reuse potential, and migration approach','Evaluated SAP standard Data Products and identified opportunities for reuse versus custom development','Defined a target architecture across SAP BDC, SAP Datasphere, SAP Databricks, Power BI, Spotfire, and SAP Analytics Cloud'],
+  ['Complex SAP data landscape with multiple legacy extraction layers, custom ABAP reports, and point-to-point integrations','Approximately 545 active HANA views, creating significant migration and maintenance complexity','Heavy dependency on existing HANA views: approximately 131 Spotfire dashboards and 40 SAP Analysis for Office reports','Limited reuse of standardized SAP Data Products, and continued reliance on custom reports, views, and data pipelines'],
+  [['~545','HANA views assessed and classified'],['~131','Spotfire dashboards in scope of the dependency analysis']],['Simplified SAP data architecture by reducing dependency on legacy extraction layers, custom reports, and point-to-point integrations','Improved time-to-insight through governed, reusable, and business-friendly data products','Strengthened data governance and compliance with improved lineage, metadata, security, and access controls']],
+ ['Solaris Energy Infrastructure','SAP S/4HANA order-to-cash improvements','Solaris Energy Infrastructure initiated an Order-to-Cash (OTC) transformation across its two business divisions, Solaris Logistics Solutions (SLS) and Solaris Power Solutions (SPS), to address critical process gaps within SAP S/4HANA Cloud Public Edition. The initiative focused on improving order processing, pricing accuracy, billing automation, and contract orchestration while establishing a standardized and scalable OTC process.',
+  ['Enhanced the Sales Order creation interface to identify kit materials and improve order processing','Introduced a new interface to update existing sales orders','Modified pricing procedures and created condition tables to support tier-based pricing','Created appropriate material masters and Sales BOMs for equipment and bundled products','Configured cumulative and invoice-split copy controls'],
+  ['Missing tier-pricing data during sales order creation, impacting pricing accuracy','Incorrect recognition of bundled/kit products within the ServiceMax-to-SAP integration','Water-silo rate determination issues affecting order and billing processes','Manual tax jurisdiction entry, creating additional effort and compliance risks','Manual invoice consolidation at month-end, reducing billing efficiency'],
+  [],['Improved pricing accuracy through automated tier-pricing and enhanced pricing logic','Increased billing efficiency by reducing manual invoice consolidation activities','Strengthened process compliance through standardized and automated OTC processes','Enabled more efficient management of complex, multi-year power delivery contracts']],
+ ['Solaris Energy Infrastructure','SAP S/4HANA procure-to-pay improvements','Solaris Energy Infrastructure embarked on a Procure-to-Pay (P2P) transformation on SAP S/4HANA Cloud Public Edition to standardize procurement processes, strengthen governance and compliance, and improve operational efficiency. The transformation focused on a governed and automated P2P lifecycle covering purchasing, approvals, field procurement, invoice processing, and master data.',
+  ['Revamped PO and contract workflows with differentiated document types, tolerance controls, and DOA-based approval routing','Implemented a structured PR process with appropriate document types, DOA approvals, and automated bypass for system-generated PRs','Introduced a mobile PR application supporting online and offline PR capture, auto-synchronization, and single sign-on for field engineers','Automated invoice processing for SPS using email-to-parked-invoice automation through SAP Build Process Automation'],
+  ['Fragmented procurement document structures with limited differentiation between Purchase Requisitions and Purchase Orders','Ad hoc approval practices and inconsistent Delegation of Authority (DOA) approval routing','Lack of tolerance controls within PO and contract workflows','No offline procurement capability for field engineers and field operations'],
+  [],['Standardized the end-to-end Procure-to-Pay lifecycle across key procurement processes','Strengthened procurement governance and compliance through structured DOA approvals and tolerance controls','Reduced manual effort through automated invoice processing and workflow routing']]
+];
+add('cases','3','Other case studies','Lotte Chemical, Murphy Oil and Solaris.',()=>
+ head('Act III · Proof','More case studies.')+
+ `<div class="tabs" id="ctabs">${CASES.map((c,i)=>`<button class="tab" role="tab" aria-selected="${i===0}" data-i="${i}">${E(c[0])}${i===3?' · P2P':i===2?' · OTC':''}</button>`).join('')}</div><div class="panel" id="cpanel"></div>`);
+
+add('commodity','3','Commodity management','Motiva’s scope and its twelve big rocks.',()=>
+ head('Act III · Proof','Motiva: commodity management.')+
+ `<div class="two sec"><div>${sec('Commodity management scope',`<div class="grid">${['Contract management','Manage pricing','Risk management and financial trading','Manage freight','Transportation and distribution','Secondary cost management','RINS (Renewable Identification Number) management','Inventory reconciliation: book to physical inventory','Demand forecasting','Financial derivatives','Book structure management'].map(s=>`<div class="grp" style="padding:10px 14px;font-weight:500;font-size:14px">${E(s)}</div>`).join('')}</div>`)}</div>
+  <div>${sec('The big rocks',`<ol class="rocks">${['Colonial pipeline pricing','Renewable Identification Numbers (RINs)','Risk management','Book strategy','Secondary costs','Obligation management','Refinery production & consumption','Forecast integration','Terminal rack solution','Transfer price','Book to physical','Motor fuel tax'].map((s,i)=>`<li><i>${i+1}</i>${E(s)}</li>`).join('')}</ol>`)}</div></div>`);
+
+/* explorer data */
+const CHAIN=[
+ ['Procurement',['Vendor selection','Contracts','Pricing agreements']],
+ ['Logistics',['Nomination','Scheduling','Goods movement']],
+ ['Terminal ops',['Inventory','Storage handling','Tank dipping & quality check']],
+ ['Distribution',['Trip planning','Loading','Proof of delivery']],
+ ['Sales (aviation / retail)',['Into-plane fueling','Meter readings','Billing']],
+ ['Settlement & accounts',['Book closing','Payables','Receivables']]];
+const LAYERS=[
+ ['Industry','Oil & gas industry',[
+  ['Industry core',['CTRM','PRA','Hydrocarbon Value Chain (IS-Oil)','Refining & mass balance','Quantity conversion','Excise duty & exchanges']],
+  ['Distribution & retail',['Transportation','Scheduling & ticketing','Load & discharge ticket','Secondary distribution management','Retail fuel network ops']],
+  ['Commodity trading & risk',['Trading (NF, Fe) · deal capture','Pricing engine · CPF','Integration: risk & TSW','Derivatives & hedging','Credit & collaterals','Broker recon · MtM & PnL']],
+  ['Health & safety',['SAP EHS','Incident management','Task management','Management of change','Work clearance management']]]],
+ ['Enterprise','Enterprise',[
+  ['Finance',['Treasury & risk management','S/4HANA FSCM credit management','S/4HANA Group Reporting','SAC Planning']],
+  ['Procurement',['Supplier management','Upstream & downstream','SAP Fieldglass','Ariba Supplier Lifecycle Management']],
+  ['Asset management',['SAP Core Scheduling','Asset Performance Management','Asset Business Network','SAP Asset Manager']],
+  ['Data & analytics',['Master Data Governance','Databricks','Datasphere','SAP Analytics Cloud reporting']]]],
+ ['Base','Base',[
+  ['Core processes',['Procure to Pay','Order to Cash','Record to Report']],
+  ['Security',['SAP GRC','SAP IAG']],
+  ['Technical',['ABAP','BTP','Cloud Integration']],
+  ['Automation',['AI Automation']]]]];
+
+/* ---------------- app ---------------- */
+const ACTS={1:'Act I · Who we are',2:'Act II · Oil & gas and CTRM',3:'Act III · Proof'};
+const main=document.getElementById('main');
+const prog=document.getElementById('prog');
+let state={tab:0,chain:0,layer:0,motiva:'The customer',case:0};
+function pageIndex(id){return PAGES.findIndex(p=>p.id===id)}
+function home(){
+  const ACTD={1:['Opening statement','Who KaarTech is: our scale, our services, and the platforms behind them.'],2:['Oil & gas and CTRM','The practice, the portfolio tower, the accelerators and the twelve-client journey.'],3:['Proof','Motiva in depth, three further case studies, and commodity management in scope.']};
+  return `<section class="hero2 fade"><div class="wrap">
+   <div class="eyebrow">Prepared for prospective clients · October 2026</div>
+   <h1>Oil &amp; Gas and Commodity Management <em>Expertise</em></h1>
+   <p class="lede" style="margin-top:20px">KaarTech’s SAP expertise for oil, gas and commodity businesses: a deep IS-Oil and CTRM practice, a layered portfolio, reusable accelerators, and programs that prove it.</p>
+   <div class="cta"><button class="btn go" data-go="about">Read the story ↓</button><button class="btn" data-go="portfolio">Open the tower →</button></div>
+   <div class="ov-card"><div class="eyebrow">KaarTech overview</div>
+    <p>To be the most trustworthy partner in our customer’s <b>AI-led Enterprise Operating System (EOS) transformation</b> journey, through deep expertise in business consulting, enterprise applications, data, cloud and AI.</p>
+    <div class="ov-grid">${[['20+','Years of business experience'],['450+','Trusted customers globally'],['650+','Oil & gas projects'],['54+','IS-Oil & commodity projects'],['14%','GCC oil & gas market share'],['51%','O&G revenue growth, FY25']].map(x=>`<div><b>${x[0]}</b><span>${x[1]}</span></div>`).join('')}</div>
+    <div class="strip"><span>Faster time-to-value</span><span>Lower transformation risk</span><span>Outcomes you can predict</span></div></div>
+  </div></section>
+  <div class="wrap">`+
+  [1,2,3].map(a=>`<section class="actrow"><div class="l"><small>ACT ${['I','II','III'][a-1]}</small><h3>${ACTD[a][0]}</h3><p>${ACTD[a][1]}</p></div><div class="rows">${PAGES.map((p,i)=>({p,i})).filter(x=>x.p.act==a).map(x=>`<button class="rowl" data-go="${x.p.id}"><span class="n">${x.i+1}</span><span><b>${E(x.p.title)}</b><span class="s">${E(x.p.sum)}</span></span><span class="a">→</span></button>`).join('')}</div></section>`).join('')+`</div>`;
+}
+function render(){
+  const id=(location.hash||'#').slice(1);
+  const i=pageIndex(id);
+  if(i<0){main.innerHTML=home();prog.style.width='0';document.title='KaarTech Expertise Portal';bind();return}
+  const p=PAGES[i];
+  main.innerHTML=`<div class="fade wrap ${p.id==='portfolio'?'':'page'}">${p.render()}${pager(i)}</div>`;
+  prog.style.width=((i+1)/PAGES.length*100)+'%';
+  document.title=p.title+' · KaarTech';
+  wire(id);bind();
+  window.scrollTo(0,0);
+}
+function pager(i){
+  const pv=PAGES[i-1],nx=PAGES[i+1];
+  return `<div class="pager">${pv?`<button class="pg" data-go="${pv.id}"><small>Previous</small><b>${E(pv.title)}</b></button>`:`<button class="pg" data-go="">${'<small>Back</small><b>Home</b>'}</button>`}${nx?`<button class="pg r" data-go="${nx.id}"><small>Next</small><b>${E(nx.title)}</b></button>`:`<button class="pg r" data-go=""><small>End</small><b>Back to home</b></button>`}</div>`;
+}
+function bind(){
+  document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{go(b.dataset.go);closeToc()});
+}
+function go(id){ if(id===''){history.pushState(null,'',location.pathname+location.search);render()} else location.hash=id }
+function wire(id){
+  if(id==='portfolio'){
+    const TABS=[
+     {k:'Overview',slab:-1,t:'The full portfolio.',d:'Three layers of reusable capability under a hydrocarbon value chain. Pick a level to climb the stack.',ch:['Base','Enterprise','Industry','Value chain'],scr:['Layers|3','Value chain stages|6','Industry groups|4','Accelerated by|34+ flows']},
+     {k:'Base',slab:0,t:'Base platform.',d:'Core processes, security, technical foundation and automation that every other layer reuses.',li:2,scr:LAYERS[2][2].map(g=>g[0]+'|'+g[1].length)},
+     {k:'Enterprise',slab:1,t:'Enterprise layer.',d:'Finance, procurement, asset management, and data and analytics on the SAP enterprise stack.',li:1,scr:LAYERS[1][2].map(g=>g[0]+'|'+g[1].length)},
+     {k:'Industry',slab:2,t:'Oil & gas industry.',d:'Industry core, distribution and retail, commodity trading and risk, and health and safety.',li:0,scr:LAYERS[0][2].map(g=>g[0]+'|'+g[1].length)},
+     {k:'Value chain',slab:3,t:'Hydrocarbon value chain.',d:'Six stages from procurement to settlement, each with the processes KaarTech has delivered.',chain:1,scr:CHAIN.map(c=>c[0]+'|'+c[1].length)},
+     {k:'Accelerators',slab:-2,t:'Accelerated delivery.',d:'34+ process flows, fit-to-standard checklists, templates, pre-configured system, test scripts and cutover plans.',acc:1,scr:['Process flows|34+','Templates|8','System|pre-configured','Cutover|ready']}];
+    const SL=['Base','Enterprise','Industry','Value chain'];
+    const pills=document.getElementById('pills'),L=document.getElementById('twL'),sc=document.getElementById('scene'),D=document.getElementById('twD');
+    const draw=()=>{const T=TABS[state.tab||0];
+      pills.innerHTML=TABS.map((x,i)=>`<button class="pill" role="tab" aria-selected="${i===(state.tab||0)}" data-i="${i}"><i></i>${E(x.k)}</button>`).join('');
+      L.innerHTML=`<div class="eyebrow" style="color:var(--orange)">${E(T.k.toUpperCase())}</div><h2>${E(T.t)}</h2><p class="lede" style="margin-top:0">${E(T.d)}</p>
+       <div class="cta"><button class="btn go" id="climb">${(state.tab||0)<TABS.length-1?'Climb to '+E(TABS[(state.tab||0)+1].k)+' ↑':'Back to overview'}</button><button class="btn" data-go="${T.acc?'accelerators':'why'}">${T.acc?'Open accelerators →':'Why KaarTech →'}</button></div>`;
+      sc.innerHTML=`<div class="iso">${SL.map((n,i)=>{const on=T.slab===i,all=T.slab<0;return `<div class="sl ${on?'on':''} ${(!on&&T.slab>=0)?'dim':''}" data-s="${i}" style="transform:translateZ(${i*68}px) ${on?'translate(-14px,14px)':''};${all&&T.slab===-2?'background:linear-gradient(135deg,#9d0102,#e44500 70%,#f1a35a);border-color:transparent':''}"><span>${n}</span></div>`}).join('')}</div>
+       <div class="screen"><b>${E(T.k)}</b>${T.scr.map(r=>{const p=r.split('|');return `<div class="r"><span>${E(p[0])}</span><span>${E(p[1])}</span></div>`}).join('')}</div>`;
+      let body='';
+      if(T.li!==undefined) body=`<div class="grid g2">${LAYERS[T.li][2].map(g=>`<div class="grp"><h4>${E(g[0])}</h4>${chips(g[1])}</div>`).join('')}</div>`;
+      else if(T.chain) body=`<div class="chain" id="chain"></div><div class="detail" id="chainD"></div>`;
+      else if(T.acc) body=`<div class="grid g3">${[['34+','Process flows'],['8','Reusable artifact types'],['6','Process categories']].map(x=>stat(x[0],x[1],true)).join('')}</div>`;
+      else body=`<div class="grid g2">${LAYERS.map(l=>`<div class="grp"><h4>${E(l[1])}</h4>${chips(l[2].map(g=>g[0]))}</div>`).join('')}<div class="grp"><h4>Value chain</h4>${chips(CHAIN.map(c=>c[0]))}</div></div>`;
+      D.innerHTML=body;
+      if(T.chain){const ch=document.getElementById('chain'),cd=document.getElementById('chainD');
+        const dc=()=>{ch.innerHTML=CHAIN.map((c,k)=>`<button class="stage" aria-pressed="${k===state.chain}" data-k="${k}"><small>${k+1}</small><b>${E(c[0])}</b></button>`).join('');cd.innerHTML=`<div class="grp"><h4>${E(CHAIN[state.chain][0])}</h4>${chips(CHAIN[state.chain][1])}</div>`;ch.querySelectorAll('.stage').forEach(b=>b.onclick=()=>{state.chain=+b.dataset.k;dc()})};dc()}
+      pills.querySelectorAll('.pill').forEach(b=>b.onclick=()=>{state.tab=+b.dataset.i;draw()});
+      sc.querySelectorAll('.sl').forEach(b=>b.onclick=()=>{state.tab=+b.dataset.s+1;draw()});
+      document.getElementById('climb').onclick=()=>{state.tab=((state.tab||0)+1)%TABS.length;draw()};
+      bind();
+    };
+    draw();
+  }
+  if(id==='motiva'){
+    const pn=document.getElementById('mpanel'),tb=document.getElementById('mtabs');
+    const draw=()=>{pn.innerHTML=`<div class="fade">${MOTIVA[state.motiva]()}</div>`;tb.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',t.dataset.k===state.motiva))};
+    tb.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{state.motiva=t.dataset.k;draw()});draw();
+  }
+  if(id==='cases'){
+    const pn=document.getElementById('cpanel'),tb=document.getElementById('ctabs');
+    const draw=()=>{const c=CASES[state.case];
+      pn.innerHTML=`<div class="fade"><h3 style="font-size:22px">${E(c[1])}</h3><p class="lede">${E(c[2])}</p>`+
+      (c[5].length?`<div class="grid g3 sec">${c[5].map(x=>stat(x[0],x[1],true)).join('')}</div>`:'')+
+      `<div class="grid g3 sec">${card('What we did',ul(c[3]))}${card('Challenges',ul(c[4]))}${card('Results',ul(c[6]))}</div></div>`;
+      tb.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',+t.dataset.i===state.case))};
+    tb.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{state.case=+t.dataset.i;draw()});draw();
+  }
+}
+/* contents overlay */
+const ov=document.getElementById('ov');
+function openToc(){document.getElementById('tocBody').innerHTML=[1,2,3].map(a=>`<div class="act"><h3>${ACTS[a]}</h3><div class="grid g2">${PAGES.map((p,i)=>({p,i})).filter(x=>x.p.act==a).map(x=>`<button class="tile" data-go="${x.p.id}"><span class="n">${x.i+1}</span><span><b>${E(x.p.title)}</b><span>${E(x.p.sum)}</span></span></button>`).join('')}</div></div>`).join('');
+  bind();ov.hidden=false;document.getElementById('closeToc').focus()}
+function closeToc(){ov.hidden=true}
+document.getElementById('tocBtn').onclick=openToc;
+document.getElementById('closeToc').onclick=closeToc;
+document.getElementById('homeBtn').onclick=()=>go('');document.getElementById('towerBtn').onclick=()=>go('portfolio');
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape')closeToc();
+  if(!ov.hidden||/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;
+  const i=pageIndex((location.hash||'#').slice(1));
+  if(e.key==='ArrowRight'){const n=PAGES[i+1];if(i<0)go(PAGES[0].id);else if(n)go(n.id)}
+  if(e.key==='ArrowLeft'&&i>0)go(PAGES[i-1].id);
+});
+/* theme */
+const root=document.documentElement;
+function setTheme(t){ if(t) root.setAttribute('data-theme',t); }
+document.getElementById('themeBtn').onclick=()=>{
+  const cur=root.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+  setTheme(cur==='dark'?'light':'dark');
+};
+window.addEventListener('hashchange',render);
+render();
+</script>
+
+</body></html>
